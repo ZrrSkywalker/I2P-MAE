@@ -5,7 +5,7 @@ Official implementation of 'Learning 3D Representations from 2D Pre-trained Mode
 We propose an alternative to obtain superior 3D representations from 2D pre-trained models via **I**mage-to-**P**oint Masked Autoencoders, named as **I2P-MAE**. By self-supervised pre-training, we leverage the well learned 2D knowledge to guide 3D masked autoencoding, which reconstructs the masked point tokens with an encoder-decoder architecture. Specifically, we conduct two types of image-to-point learning schemes: 2D-guided masking and 2D-semantic reconstruction. In this way, the 3D network can effectively inherit high-level 2D semantics learned from rich image data for discriminative 3D modeling.
 
 <div align="center">
-  <img src="pipeline.jpg"/>
+  <img src="pipeline.png"/>
 </div>
 
 ## Code
