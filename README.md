@@ -1,4 +1,7 @@
 # Learning 3D Representations from 2D Pre-trained Models via Image-to-Point Masked Autoencoders
+
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/learning-3d-representations-from-2d-pre/3d-point-cloud-classification-on-scanobjectnn)](https://paperswithcode.com/sota/3d-point-cloud-classification-on-scanobjectnn?p=learning-3d-representations-from-2d-pre)
+
 Official implementation of 'Learning 3D Representations from 2D Pre-trained Models via Image-to-Point Masked Autoencoders'
 
 ## Introduction
