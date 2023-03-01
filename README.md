@@ -7,6 +7,9 @@ Official implementation of ['Learning 3D Representations from 2D Pre-trained Mod
 
 The paper has been accepted by **CVPR 2023** 🔥.
 
+## News
+* The 3D-only variant of I2P-MAE is our previous work, [Point-M2AE](https://arxiv.org/pdf/2205.14401.pdf), accepted by **NeurIPS 2022** and [open-sourced](https://github.com/ZrrSkywalker/Point-M2AE).
+
 ## Introduction
 We propose an alternative to obtain superior 3D representations from 2D pre-trained models via **I**mage-to-**P**oint Masked Autoencoders, named as **I2P-MAE**. By self-supervised pre-training, we leverage the well learned 2D knowledge to guide 3D masked autoencoding, which reconstructs the masked point tokens with an encoder-decoder architecture. Specifically, we conduct two types of image-to-point learning schemes: 2D-guided masking and 2D-semantic reconstruction. In this way, the 3D network can effectively inherit high-level 2D semantics learned from rich image data for discriminative 3D modeling.
 
@@ -18,7 +21,7 @@ We propose an alternative to obtain superior 3D representations from 2D pre-trai
 Comming soon.
 
 ## Acknowledgement
-This repo benefits from [Point-BERT](https://github.com/lulutang0608/Point-BERT), [Point-MAE](https://github.com/Pang-Yatian/Point-MAE), [Point-M2AE](https://github.com/ZrrSkywalker/Point-M2AE) and [CLIP](https://github.com/openai/CLIP). Thanks for their wonderful works.
+This repo benefits from [Point-M2AE](https://github.com/ZrrSkywalker/Point-M2AE), [Point-BERT](https://github.com/lulutang0608/Point-BERT), [Point-MAE](https://github.com/Pang-Yatian/Point-MAE), and [CLIP](https://github.com/openai/CLIP). Thanks for their wonderful works.
 
 ## Contact
 If you have any question about this project, please feel free to contact zhangrenrui@pjlab.org.cn.
