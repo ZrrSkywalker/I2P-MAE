@@ -29,6 +29,22 @@ We propose an alternative to obtain superior 3D representations from 2D pre-trai
   <img src="pipeline.png"/>
 </div>
 
+## I2P-MAE Models
+
+### Fine-tuning
+Synthetic shape classification on ModelNet40 with 1k points:
+| Task  | Config | Acc.| Vote| Ckpts | Logs |   
+| :-----: | :-----:| :-----:| :-----: | :-----:|:-----:|
+| Classification | [modelnet40.yaml]()|93.67%| 94.06% | [modelnet40.pth]() | [modelnet40.log]() |
+
+Real-world shape classification on ScanObjectNN:
+| Task | Split | Config | Acc.| Ckpts | Logs |   
+| :-----: | :-----:|:-----:| :-----:| :-----:|:-----:|
+| Classification | PB-T50-RS|[scan_pb.yaml]() | 90.11%| [scan_pd.pth]() | [scan_pd.log]() |
+| Classification |OBJ-BG| [scan_obj-bg.yaml]() | 94.15%| - | - |
+| Classification | OBJ-ONLY| [scan_obj.yaml]() | 91.57%| - | - |
+
+
 ## Requirements
 
 ### Installation
@@ -75,6 +91,28 @@ The final directory structure should be:
 │   ├──ShapeNet55-34/
 │   ├──shapenetcore_partanno_segmentation_benchmark_v0_normal/
 ├──...
+```
+
+## Get Started
+
+### Fine-tuning
+Please create the folder `ckpts/` and download the [pre-train.pth]() into it.
+
+For ModelNet40, run:
+```bash
+CUDA_VISIBLE_DEVICES=0 python main.py --config cfgs/fine-tuning/ModelNet40.yaml --exp_name finetune --finetune_model --ckpts ckpts/pre-train.pth
+```
+
+For the three splits of ScanObjectNN, run:
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python main.py --config cfgs/fine-tuning/scan_pb.yaml --exp_name finetune --finetune_model --ckpts ckpts/pre-train.pth
+```
+```bash
+CUDA_VISIBLE_DEVICES=0 python main.py --config cfgs/fine-tuning/scan_obj.yaml --exp_name finetune --finetune_model --ckpts ckpts/pre-train.pth
+```
+```bash
+CUDA_VISIBLE_DEVICES=0 python main.py --config cfgs/fine-tuning/scan_obj-bg.yaml --exp_name finetune --finetune_model --ckpts ckpts/pre-train.pth
 ```
 
 
