@@ -8,6 +8,7 @@ Official implementation of ['Learning 3D Representations from 2D Pre-trained Mod
 The paper has been accepted by **CVPR 2023** 🔥.
 
 ## News
+* The pre-training and fine-tuning code of I2P-MAE has been released.
 * The 3D-only variant of I2P-MAE is our previous work, [Point-M2AE](https://arxiv.org/pdf/2205.14401.pdf), accepted by **NeurIPS 2022** and [open-sourced](https://github.com/ZrrSkywalker/Point-M2AE). We have released its pre-training and fine-tuning code.
 * 📣 Please check our latest work [Point-NN, Parameter is Not All You Need](https://github.com/ZrrSkywalker/Point-NN) accepted by **CVPR 2023**, which, for the first time, acheives 3D understanding with $\color{darkorange}{No\ Parameter\ or\ Training\.}$ 💥
 * 📣 Please check our latest work [PiMAE](https://github.com/BLVLab/PiMAE) accepted by **CVPR 2023**, which promotes 3D and 2D interaction to improve 3D object detection performance.
@@ -121,7 +122,24 @@ CUDA_VISIBLE_DEVICES=0 python main.py --config cfgs/linear-svm/scan_obj-bg.yaml 
 ```
 
 ### Fine-tuning
-Coming soon!
+Please create a folder `ckpts/` and download the [pre-train.pth]() into it. The fine-tuning configs are in `cfgs/fine-tuning/`.
+
+For ModelNet40, run:
+```bash
+CUDA_VISIBLE_DEVICES=0 python main.py --config cfgs/fine-tuning/modelnet40.yaml --finetune_model --exp_name finetune --ckpts ckpts/pre-train.pth
+```
+
+For the three splits of ScanObjectNN, run:
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python main.py --config cfgs/fine-tuning/scan_pb.yaml --finetune_model --exp_name finetune --ckpts ckpts/pre-train.pth
+```
+```bash
+CUDA_VISIBLE_DEVICES=0 python main.py --config cfgs/fine-tuning/scan_obj.yaml --finetune_model --exp_name finetune --ckpts ckpts/pre-train.pth
+```
+```bash
+CUDA_VISIBLE_DEVICES=0 python main.py --config cfgs/fine-tuning/scan_obj-bg.yaml --finetune_model --exp_name finetune --ckpts ckpts/pre-train.pth
+```
 
 
 ## Acknowledgement
