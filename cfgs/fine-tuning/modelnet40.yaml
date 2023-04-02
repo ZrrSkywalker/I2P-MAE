@@ -1,41 +1,41 @@
-optimizer : {
+optimizer: {
   type: AdamW,
   kwargs: {
-  lr : 0.0005,
-  weight_decay : 0.05
+  lr: 0.0005,
+  weight_decay: 0.05
 }}
 
 scheduler: {
   type: CosLR,
   kwargs: {
     epochs: 300,
-    initial_epochs : 10
+    initial_epochs: 10
 }}
 
-dataset : {
-  train : { _base_: cfgs/dataset/ModelNet40.yaml,
+dataset: {
+  train: { _base_: cfgs/dataset/ModelNet40.yaml,
             others: {subset: 'train'}},
-  val : { _base_: cfgs/dataset/ModelNet40.yaml,
+  val: { _base_: cfgs/dataset/ModelNet40.yaml,
             others: {subset: 'test'}},
-  test : { _base_: cfgs/dataset/ModelNet40.yaml,
+  test: { _base_: cfgs/dataset/ModelNet40.yaml,
             others: {subset: 'test'}}}
 
-model : {
-  NAME: Point_M2AE_ModelNet40,
-  group_sizes: [16, 8, 8],
+model: {
+  NAME: I2P_MAE_ModelNet40,
+  group_sizes: [48, 24, 24],
   num_groups: [512, 256, 64],
-  smooth: 0.3,
+  smooth: 0.2,
   # hierarchical encoder
   encoder_depths: [5, 5, 5],
   encoder_dims: [96, 192, 384],
-  local_radius: [0.32, 0.64, 1.28],  
+  local_radius: [0.24, 0.48, 0.96],  
   # others
   drop_path_rate: 0.1,
   num_heads: 6,
 }
 
 npoints: 1024
-total_bs : 32
-step_per_update : 1
-max_epoch : 300
-grad_norm_clip : 10
+total_bs: 32
+step_per_update: 1
+max_epoch: 300
+grad_norm_clip: 10
