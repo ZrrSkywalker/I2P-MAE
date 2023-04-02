@@ -12,23 +12,21 @@ from pointnet2_ops import pointnet2_utils
 from torchvision import transforms
 
 
-train_transforms = transforms.Compose(
+train_transforms_scan = transforms.Compose(
     [
-         # data_transforms.PointcloudScale(),
-         # data_transforms.PointcloudRotate(),
-         # data_transforms.PointcloudTranslate(),
-         # data_transforms.PointcloudJitter(),
-         # data_transforms.PointcloudRandomInputDropout(),
-         # data_transforms.RandomHorizontalFlip(),
-         data_transforms.PointcloudScaleAndTranslate(),
+        data_transforms.PointcloudScaleAndTranslate(scale_low=0.9, scale_high=1.1, translate_range=0),
+        data_transforms.PointcloudRotate(),
+    ]
+)
+
+train_transforms_modelnet40 = transforms.Compose(
+    [
+        data_transforms.PointcloudScaleAndTranslate(),
     ]
 )
 
 test_transforms = transforms.Compose(
     [
-        # data_transforms.PointcloudScale(),
-        # data_transforms.PointcloudRotate(),
-        # data_transforms.PointcloudTranslate(),
         data_transforms.PointcloudScaleAndTranslate(),
     ]
 )
@@ -53,6 +51,7 @@ class Acc_Metric:
         _dict = dict()
         _dict['acc'] = self.acc
         return _dict
+
 
 def run_net(args, config, train_writer=None, val_writer=None):
     logger = get_logger(args.log_name)
@@ -149,7 +148,11 @@ def run_net(args, config, train_writer=None, val_writer=None):
             points = pointnet2_utils.gather_operation(points.transpose(1, 2).contiguous(), fps_idx).transpose(1, 2).contiguous()  # (B, N, 3)
             # import pdb; pdb.set_trace()
 
-            points = train_transforms(points)
+            if config.model['NAME'].split('_')[-1] == 'ScanObjectNN':
+                points = train_transforms_scan(points)
+            elif config.model['NAME'].split('_')[-1] == 'ModelNet40':
+                points = train_transforms_modelnet40(points)
+
 
             ret = base_model(points)
             loss, acc = base_model.module.get_loss_acc(ret, label)
@@ -256,7 +259,6 @@ def validate(base_model, test_dataloader, epoch, val_writer, args, config, logge
         val_writer.add_scalar('Metric/ACC', acc, epoch)
 
     return Acc_Metric(acc)
-
 
 def validate_vote(base_model, test_dataloader, epoch, val_writer, args, config, logger = None, times = 10):
     print_log(f"[VALIDATION_VOTE] epoch {epoch}", logger = logger)
