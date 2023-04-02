@@ -31,6 +31,12 @@ We propose an alternative to obtain superior 3D representations from 2D pre-trai
 
 ## I2P-MAE Models
 
+### Pre-training
+Guided by pre-trained CLIP on ShapeNet, I2P-MAE is evaluated by **Linear SVM** on ModelNet40 and ScanObjectNN (OBJ-BG split) datasets, without downstream fine-tuning:
+| Task | Dataset | Config | MN40 Acc.| OBJ-BG Acc.| Ckpts | Logs |   
+| :-----: | :-----: |:-----:| :-----: | :-----:| :-----:|:-----:|
+| Pre-training | ShapeNet |[i2p-mae.yaml](./cfgs/pre-training/i2p-mae.yaml)| 93.35% | 87.09% | [pre-train.pth]() | [log]() |
+
 ### Fine-tuning
 Synthetic shape classification on ModelNet40 with 1k points:
 | Task  | Config | Acc.| Vote| Ckpts | Logs |   
@@ -57,6 +63,7 @@ conda create -n i2pmae python=3.7
 conda activate i2pmae
 
 pip install -r requirements.txt
+pip install torch-scatter -f https://data.pyg.org/whl/torch-1.11.0+cu113.html
 
 # Install the according versions of torch and torchvision
 conda install pytorch torchvision cudatoolkit
@@ -95,25 +102,25 @@ The final directory structure should be:
 
 ## Get Started
 
-### Fine-tuning
-Please create the folder `ckpts/` and download the [pre-train.pth]() into it.
+### Pre-training
+I2P-MAE is pre-trained on ShapeNet dataset with the config file `cfgs/pre-training/i2p-mae.yaml`. Run:
+```bash
+CUDA_VISIBLE_DEVICES=0 python main.py --config cfgs/pre-training/i2p-mae.yaml --exp_name pre-train
+```
+
+To evaluate the pre-trained I2P-MAE by **Linear SVM**, create a folder `ckpts/` and download the [pre-train.pth]() into it. Use the configs in `cfgs/linear-svm/` and indicate the evaluation dataset by `--test_svm`.
 
 For ModelNet40, run:
 ```bash
-CUDA_VISIBLE_DEVICES=0 python main.py --config cfgs/fine-tuning/ModelNet40.yaml --exp_name finetune --finetune_model --ckpts ckpts/pre-train.pth
+CUDA_VISIBLE_DEVICES=0 python main.py --config cfgs/linear-svm/modelnet40.yaml --test_svm modelnet40 --exp_name test_svm --ckpts ./ckpts/pre-train.pth
+```
+For ScanObjectNN (OBJ-BG split), run:
+```bash
+CUDA_VISIBLE_DEVICES=0 python main.py --config cfgs/linear-svm/scan_obj-bg.yaml --test_svm scan --exp_name test_svm --ckpts ./ckpts/pre-train.pth
 ```
 
-For the three splits of ScanObjectNN, run:
-
-```bash
-CUDA_VISIBLE_DEVICES=0 python main.py --config cfgs/fine-tuning/scan_pb.yaml --exp_name finetune --finetune_model --ckpts ckpts/pre-train.pth
-```
-```bash
-CUDA_VISIBLE_DEVICES=0 python main.py --config cfgs/fine-tuning/scan_obj.yaml --exp_name finetune --finetune_model --ckpts ckpts/pre-train.pth
-```
-```bash
-CUDA_VISIBLE_DEVICES=0 python main.py --config cfgs/fine-tuning/scan_obj-bg.yaml --exp_name finetune --finetune_model --ckpts ckpts/pre-train.pth
-```
+### Fine-tuning
+Coming soon!
 
 
 ## Acknowledgement
