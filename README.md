@@ -62,11 +62,12 @@ cd I2P-MAE
 conda create -n i2pmae python=3.7
 conda activate i2pmae
 
-pip install -r requirements.txt
-pip install torch-scatter -f https://data.pyg.org/whl/torch-1.11.0+cu113.html
-
 # Install the according versions of torch and torchvision
 conda install pytorch torchvision cudatoolkit
+# e.g., conda install pytorch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 cudatoolkit=11.3
+
+pip install -r requirements.txt
+pip install torch-scatter -f https://data.pyg.org/whl/torch-1.11.0+cu113.html
 ```
 Install GPU-related packages:
 ```bash
