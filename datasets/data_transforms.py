@@ -1,21 +1,55 @@
 import numpy as np
 import torch
 import random
+import collections
+from scipy.linalg import expm, norm
 
 
 class PointcloudRotate(object):
-    def __call__(self, pc):
-        bsize = pc.size()[0]
-        for i in range(bsize):
-            rotation_angle = np.random.uniform() * 2 * np.pi
-            cosval = np.cos(rotation_angle)
-            sinval = np.sin(rotation_angle)
-            rotation_matrix = np.array([[cosval, 0, sinval],
-                                        [0, 1, 0],
-                                        [-sinval, 0, cosval]])
-            R = torch.from_numpy(rotation_matrix.astype(np.float32)).to(pc.device)
-            pc[i, :, :] = torch.matmul(pc[i], R)
-        return pc
+    def __init__(self, angle=[0.0, 1.0, 0.0]):
+        self.angle = np.array(angle) * np.pi
+
+    @staticmethod
+    def M(axis, theta):
+        return expm(np.cross(np.eye(3), axis / norm(axis) * theta))
+
+    def __call__(self, data):
+        if hasattr(data, 'keys'):
+            device = data['pos'].device
+        else:
+            device = data.device
+
+        if isinstance(self.angle, collections.Iterable):
+            rot_mats = []
+            for axis_ind, rot_bound in enumerate(self.angle):
+                theta = 0
+                axis = np.zeros(3)
+                axis[axis_ind] = 1
+                if rot_bound is not None:
+                    theta = np.random.uniform(-rot_bound, rot_bound)
+                rot_mats.append(self.M(axis, theta))
+            # Use random order
+            np.random.shuffle(rot_mats)
+            rot_mat = torch.tensor(rot_mats[0] @ rot_mats[1] @ rot_mats[2], dtype=torch.float32, device=device)
+        else:
+            raise ValueError()
+
+        """ DEBUG
+        from openpoints.dataset import vis_multi_points
+        old_points = data.cpu().numpy()
+        # old_points = data['pos'].numpy()
+        # new_points = (data['pos'] @ rot_mat.T).numpy()
+        new_points = (data @ rot_mat.T).cpu().numpy()
+        vis_multi_points([old_points, new_points])
+        End of DEBUG"""
+
+        if hasattr(data, 'keys'):
+            data['pos'] = data['pos'] @ rot_mat.T
+            if 'normals' in data:
+                data['normals'] = data['normals'] @ rot_mat.T
+        else:
+            data = data @ rot_mat.T
+        return data
 
 class PointcloudScaleAndTranslate(object):
     def __init__(self, scale_low=2. / 3., scale_high=3. / 2., translate_range=0.2):
