@@ -36,7 +36,7 @@ We propose an alternative to obtain superior 3D representations from 2D pre-trai
 Guided by pre-trained CLIP on ShapeNet, I2P-MAE is evaluated by **Linear SVM** on ModelNet40 and ScanObjectNN (OBJ-BG split) datasets, without downstream fine-tuning:
 | Task | Dataset | Config | MN40 Acc.| OBJ-BG Acc.| Ckpts | Logs |   
 | :-----: | :-----: |:-----:| :-----: | :-----:| :-----:|:-----:|
-| Pre-training | ShapeNet |[i2p-mae.yaml](./cfgs/pre-training/i2p-mae.yaml)| 93.35% | 87.09% | [pre-train.pth]() | [log](https://drive.google.com/file/d/11kkgTQoUJVLYKk1Xbo0XtQPCqh50my-G/view?usp=share_link) |
+| Pre-training | ShapeNet |[i2p-mae.yaml](./cfgs/pre-training/i2p-mae.yaml)| 93.35% | 87.09% | [pre-train.pth](https://drive.google.com/file/d/1TYKHdLwu9DKLgsnvsY4fpgpNowCHErFZ/view?usp=share_link) | [log](https://drive.google.com/file/d/11kkgTQoUJVLYKk1Xbo0XtQPCqh50my-G/view?usp=share_link) |
 
 ### Fine-tuning
 Synthetic shape classification on ModelNet40 with 1k points:
