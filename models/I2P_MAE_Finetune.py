@@ -51,6 +51,8 @@ class H_Encoder(nn.Module):
                             num_heads=config.num_heads,
                         ))
             depth_count += self.encoder_depths[i]
+        self.apply(self._init_weights)
+            
 
     def _init_weights(self, m):
         if isinstance(m, nn.Linear):
