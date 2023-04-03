@@ -52,12 +52,6 @@ class H_Encoder(nn.Module):
                         ))
             depth_count += self.encoder_depths[i]
 
-        # self.encoder_norms = nn.ModuleList()
-        # for i in range(len(self.encoder_depths)):
-        #     self.encoder_norms.append(nn.LayerNorm(self.encoder_dims[i]))
-
-        self.apply(self._init_weights)
-
     def _init_weights(self, m):
         if isinstance(m, nn.Linear):
             trunc_normal_(m.weight, std=.02)
