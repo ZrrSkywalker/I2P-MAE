@@ -182,9 +182,10 @@ def run_net(args, config, train_writer=None, val_writer=None):
         epoch_end_time = time.time()
 
         if train_writer is not None:
-            train_writer.add_scalar('Loss/Epoch/Loss_1', losses.avg(0), epoch)
-        print_log('[Training] EPOCH: %d EpochTime = %.3f (s) Losses = %s lr = %.6f' %
-            (epoch,  epoch_end_time - epoch_start_time, ['%.4f' % l for l in losses.avg()],
+            train_writer.add_scalar('Loss/Epoch/Loss_2d', losses_2d.avg(0), epoch)
+            train_writer.add_scalar('Loss/Epoch/Loss_3d', losses_3d.avg(0), epoch)
+        print_log('[Training] EPOCH: %d EpochTime = %.3f (s) Losses_2d = %s Losses_3d = %s lr = %.6f' %
+            (epoch,  epoch_end_time - epoch_start_time, ['%.4f' % l for l in losses_2d.avg()], ['%.4f' % l for l in losses_3d.avg()],
              optimizer.param_groups[0]['lr']), logger = logger)
 
         ### eval with SVM ###
