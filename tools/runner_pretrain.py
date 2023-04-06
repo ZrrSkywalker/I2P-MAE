@@ -51,7 +51,7 @@ def run_net(args, config, train_writer=None, val_writer=None):
     (_, extra_train_dataloader)  = builder.dataset_builder(args, config.dataset.extra_train) if config.dataset.get('extra_train') else (None, None)
     
     # build dataset for linear SVM
-    train_dataloader_svm, test_dataloader_svm = builder.dataset_builder_svm(config.dataset)
+    train_dataloader_svm, test_dataloader_svm = builder.dataset_builder_svm(config.dataset.svm)
     
     # build model
     base_model = builder.model_builder(config.model)
