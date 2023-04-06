@@ -16,7 +16,15 @@ dataset: {
   val: { _base_: cfgs/dataset/ShapeNet-55.yaml,
             others: {subset: 'test', npoints: 2048}},
   test: { _base_: cfgs/dataset/ShapeNet-55.yaml,
-            others: {subset: 'test', npoints: 2048}}}
+            others: {subset: 'test', npoints: 2048}},
+  svm: {
+        train: { _base_: cfgs/dataset/ModelNet40_SVM.yaml,
+                  others: {partition: 'train', num_points: 1024}},
+        val: { _base_: cfgs/dataset/ModelNet40_SVM.yaml,
+                  others: {partition: 'test', num_points: 1024}},
+        test: { _base_: cfgs/dataset/ModelNet40_SVM.yaml,
+                  others: {partition: 'test', num_points: 1024}}}
+        }
 
 model: {
   NAME: I2P_MAE,
