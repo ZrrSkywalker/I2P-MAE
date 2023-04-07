@@ -16,7 +16,7 @@ def get_args():
     parser.add_argument('--local_rank', type=int, default=0)
     parser.add_argument('--num_workers', type=int, default=8)
     # seed 
-    parser.add_argument('--seed', type=int, default=1, help='random seed')
+    parser.add_argument('--seed', type=int, default=0, help='random seed')
     parser.add_argument(
         '--deterministic',
         action='store_true',
