@@ -252,15 +252,14 @@ class I2P_MAE(nn.Module):
                             ))  
         self.decoder_norm = nn.LayerNorm(self.decoder_dims[-1])
 
-
+        # 3D-coordinate reconstruction                        
+        self.rec_head_3d = nn.Conv1d(self.decoder_dims[-1], 3 * self.group_sizes[1], 1)
+        self.loss_3d = ChamferDistanceL2().cuda()
+        
         # 2D-semantic reconstruction
         self.feat_dim_2d = config.clip_config.feat_dim
         self.rec_head_2d = nn.Conv1d(self.decoder_dims[-1], self.feat_dim_2d * self.group_sizes[1] * 3, 1)
         self.loss_2d = nn.MSELoss()
-
-        # 3D-coordinate reconstruction                        
-        self.rec_head_3d = nn.Conv1d(self.decoder_dims[-1], 3 * self.group_sizes[1], 1)
-        self.loss_3d = ChamferDistanceL2().cuda()
 
         # multi-view projection
         self.img_mean = torch.Tensor([0.485, 0.456, 0.406])
