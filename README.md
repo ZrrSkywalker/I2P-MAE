@@ -21,8 +21,8 @@ Comparison with existing MAE-based 3D models on the three spilts of ScanObjectNN
 | [Point-BERT](https://github.com/lulutang0608/Point-BERT) | 22.1M |4.8| -|87.43% |88.12% |83.07 %| 
 | [ACT](https://github.com/RunpeiDong/ACT) | 22.1M |4.8| 2D|92.48%| 91.57% | 87.88% | 
 | [Point-MAE](https://github.com/Pang-Yatian/Point-MAE) | 22.1M |4.8| -|90.02%|88.29%|85.18%|
-| [Point-M2AE](https://github.com/ZrrSkywalker/Point-M2AE)| 15.3M |3.6| -|91.22%|88.81%|86.43%|
-| **I2P-MAE** | **15.3M** |**3.6**| **2D**|**94.15%**|**91.57%**|**90.11%**|
+| [Point-M2AE](https://github.com/ZrrSkywalker/Point-M2AE)| 12.9M |3.6| -|91.22%|88.81%|86.43%|
+| **I2P-MAE** | **12.9M** |**3.6**| **2D**|**94.15%**|**91.57%**|**90.11%**|
 
 We propose an alternative to obtain superior 3D representations from 2D pre-trained models via **I**mage-to-**P**oint Masked Autoencoders, named as **I2P-MAE**. By self-supervised pre-training, we leverage the well learned 2D knowledge to guide 3D masked autoencoding, which reconstructs the masked point tokens with an encoder-decoder architecture. Specifically, we conduct two types of image-to-point learning schemes: 2D-guided masking and 2D-semantic reconstruction. In this way, the 3D network can effectively inherit high-level 2D semantics learned from rich image data for discriminative 3D modeling.
 
