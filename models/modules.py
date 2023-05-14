@@ -326,13 +326,6 @@ class Attention(nn.Module):
         attn = attn.softmax(dim=-1)
         attn = self.attn_drop(attn)
 
-        # global flag
-        # flag += 1
-        # if flag == 5:
-        #     for k in range(attn.shape[0]):
-        #         torch.save(attn[k][0][0][:], "/data2/renrui/visualize_pc/layer5_mask/data/attn" + str(k) + ".pt")
-        #     exit(1)
-
         x = (attn @ v).transpose(1, 2).reshape(B, N, C)
         x = self.proj(x)
         x = self.proj_drop(x)
