@@ -101,6 +101,7 @@ def run_net(args, config, train_writer=None, val_writer=None):
         batch_start_time = time.time()
         batch_time = AverageMeter()
         data_time = AverageMeter()
+        losses = AverageMeter(['losses'])
         losses_2d = AverageMeter(['Loss_2D'])
         losses_3d = AverageMeter(['Loss_3D'])
 
@@ -152,7 +153,10 @@ def run_net(args, config, train_writer=None, val_writer=None):
             if args.distributed:
                 loss = dist_utils.reduce_tensor(loss, args)
                 losses.update([loss.item()*1000])
+                losses_2d.update([loss_2d.item()*1000])
+                losses_3d.update([loss_3d.item()*1000])
             else:
+                losses.update([loss.item()*1000])
                 losses_3d.update([loss_3d.item()*1000])
                 losses_2d.update([loss_2d.item()*1000])
 
